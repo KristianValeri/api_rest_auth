@@ -15,7 +15,7 @@ const getMotos = async (req, res, next) => {
 
 
 
-putMoto = async (req, res, next) => {
+const putMoto = async (req, res, next) => {
   try {
     const motoUpdated = await Moto.findByIdAndUpdate(req.params.id, req.body, {
       new: true
@@ -29,7 +29,7 @@ putMoto = async (req, res, next) => {
 
 
 
-deleteMoto = async (req, res, next) => {
+const deleteMoto = async (req, res, next) => {
   try {
     const motoDeleted = await Moto.findByIdAndDelete(req.params.id)
     res.json(motoDeleted)
@@ -40,7 +40,7 @@ deleteMoto = async (req, res, next) => {
 
 
 
-getMoto = async (req, res, next) => {
+const getMoto = async (req, res, next) => {
   try {
     const moto = await Moto.findById(req.params.id)
     res.json(moto)
@@ -49,7 +49,7 @@ getMoto = async (req, res, next) => {
   }
 }
 
-postMoto = async (req, res, next) => {
+const postMoto = async (req, res, next) => {
   try {
     const newMoto = new Moto(req.body)
     const savedMoto = await newMoto.save()

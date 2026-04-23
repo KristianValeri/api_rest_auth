@@ -49,7 +49,7 @@ const loginUser = async (req, res, next) => {
   }
 }
 
-deleteUser = async (req, res, next) => {
+const deleteUser = async (req, res, next) => {
   try {
     const userDeleted = await User.findByIdAndDelete(req.params.id)
     res
@@ -62,7 +62,7 @@ deleteUser = async (req, res, next) => {
   }
 }
 
-getUser = async (req, res, next) => {
+const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' })
@@ -74,7 +74,7 @@ getUser = async (req, res, next) => {
   }
 }
 
-getUsers = async (req, res, next) => {
+const getUsers = async (req, res, next) => {
   try {
     const users = await User.find()
     res.status(200).json(users)
@@ -85,20 +85,27 @@ getUsers = async (req, res, next) => {
   }
 }
 
-putUser = async (req, res, next) => {
+const putUser = async (req, res, next) => {
   try {
-    const userUpdated = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true
-    })
-    if (!userUpdated)
+    const user = await User.findById(req.params.id)
+
+    if (!user) {
       return res.status(404).json({ message: 'Usuario no encontrado' })
-    res
-      .status(200)
-      .json({ message: 'Usuario actualizado correctamente', userUpdated })
+    }
+    
+    Object.assign(user, req.body)
+
+    await user.save()
+
+    res.status(200).json({
+      message: 'Usuario actualizado correctamente',
+      userUpdated: user
+    })
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: 'Error al actualizar el usuario', error: error.message })
+    return res.status(500).json({
+      message: 'Error al actualizar el usuario',
+      error: error.message
+    })
   }
 }
 

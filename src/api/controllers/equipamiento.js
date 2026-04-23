@@ -9,7 +9,7 @@ const getEquipamientos = async (req, res, next) => {
     res.status(500).json({ message: 'Error al obtener los equipamientos', error: error.message })
   }
 }
- getEquipamiento = async (req, res, next) => {
+ const getEquipamiento = async (req, res, next) => {
    try {
     const equipamiento = await Equipamiento.findById(req.params.id)
     res.json(equipamiento)    
@@ -18,7 +18,7 @@ const getEquipamientos = async (req, res, next) => {
   }
  }
 
-postEquipamiento = async (req, res, next) => {
+const postEquipamiento = async (req, res, next) => {
   try {
     const newEquipamiento = new Equipamiento(req.body)
     const savedEquipamiento = await newEquipamiento.save()
@@ -28,7 +28,7 @@ postEquipamiento = async (req, res, next) => {
   }
 }
 
-putEquipamiento = async (req, res, next) => {
+const putEquipamiento = async (req, res, next) => {
   try {
     const equipamientoUpdated = await Equipamiento.findByIdAndUpdate(req.params.id, req.body, {
       new: true
@@ -39,7 +39,7 @@ putEquipamiento = async (req, res, next) => {
   }
 }
 
-deleteEquipamiento = async (req, res, next) => {
+const deleteEquipamiento = async (req, res, next) => {
   try {
     const equipamientoDeleted = await Equipamiento.findByIdAndDelete(req.params.id)
     res.json(equipamientoDeleted)
